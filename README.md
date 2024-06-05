@@ -50,7 +50,7 @@ still working on it...
 # Tests
 
 * ### Mac
-to run tests in terminal run: ```./test_mac```
+to run tests in terminal run: ```./test_mac``` <br />
 to run test coverage in terminal run: ```./test_mac_coverage```
 
 * ### Linux
