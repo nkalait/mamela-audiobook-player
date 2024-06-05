@@ -11,6 +11,7 @@
 # fyne cross compiler folder
 fyne-cross/
 
+# test binary
 tester
 
 # Output of the go coverage tool, specifically when used with LiteIDE
@@ -21,6 +22,9 @@ tester
 
 # Go workspace file
 go.work
+
+# DB for app
+data.json
 
 *mamela_audiobook_player*
 *.app
