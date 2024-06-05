@@ -17,6 +17,8 @@ import (
 // The name of the app
 const appLabel = "Mamela"
 
+var testing = false
+
 func main() {
 	go func() {
 		log.Println(http.ListenAndServe("localhost:6060", nil))
@@ -31,5 +33,5 @@ func main() {
 	<-audio.BassInitiatedChan
 
 	// There is a blocking call somewhere in there
-	ui.BuildUI(appLabel)
+	ui.BuildUI(appLabel, testing)
 }

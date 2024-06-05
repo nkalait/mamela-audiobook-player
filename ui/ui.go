@@ -16,16 +16,21 @@ import (
 	"github.com/sqweek/dialog"
 )
 
+var Testing = false
+
 var (
 	mamelaApp  fyne.App
 	MainWindow fyne.Window
 )
 
-func BuildUI(appLabel string) {
+func BuildUI(appLabel string, testing bool) {
+	Testing = testing
 	mamelaApp = app.New()
-	setupTheming()
+	if !testing {
+		setupTheming()
+		setSystemTrayMenu()
+	}
 	mainContainer := arrangeUI()
-	setSystemTrayMenu()
 	prepareMainWindow(appLabel, mainContainer)
 }
 
@@ -63,32 +68,34 @@ func setSystemTrayMenu() {
 func prepareMainWindow(label string, c *fyne.Container) {
 	MainWindow = mamelaApp.NewWindow(label)
 	MainWindow.SetContent(c)
-	MainWindow.Resize(fyne.NewSize(800, 600))
-	MainWindow.SetMainMenu(makeMainMenu())
-	MainWindow.SetCloseIntercept(func() {
-		audio.ExitListener <- true
-		time.Sleep(1 * time.Second)
-		MainWindow.Close()
-		time.Sleep(1 * time.Second)
-		os.Exit(0) // this is to also quit the system tray menu
-	})
-	MainWindow.Canvas().SetOnTypedKey(func(k *fyne.KeyEvent) {
-		if k.Name == "Space" {
-			if audio.GetState() == audio.PLAYING {
-				audio.Pause()
-			} else {
-				audio.Play()
+	if !Testing {
+		MainWindow.Resize(fyne.NewSize(800, 600))
+		MainWindow.SetMainMenu(makeMainMenu())
+		MainWindow.SetCloseIntercept(func() {
+			audio.ExitListener <- true
+			time.Sleep(1 * time.Second)
+			MainWindow.Close()
+			time.Sleep(1 * time.Second)
+			os.Exit(0) // this is to also quit the system tray menu
+		})
+		MainWindow.Canvas().SetOnTypedKey(func(k *fyne.KeyEvent) {
+			if k.Name == "Space" {
+				if audio.GetState() == audio.PLAYING {
+					audio.Pause()
+				} else {
+					audio.Play()
+				}
+			} else if k.Name == "Up" || k.Name == "Down" {
+				adjustVolumeOnKeyPress(string(k.Name))
+			} else if k.Name == "Left" || k.Name == "Right" {
+				adjustPlayTimeScrubberOnKeyPress(string(k.Name))
+			} else if k.Name == "S" || k.Name == "s" {
+				audio.Stop()
 			}
-		} else if k.Name == "Up" || k.Name == "Down" {
-			adjustVolumeOnKeyPress(string(k.Name))
-		} else if k.Name == "Left" || k.Name == "Right" {
-			adjustPlayTimeScrubberOnKeyPress(string(k.Name))
-		} else if k.Name == "S" || k.Name == "s" {
-			audio.Stop()
-		}
-	})
-	MainWindow.CenterOnScreen()
-	MainWindow.ShowAndRun()
+		})
+		MainWindow.CenterOnScreen()
+		MainWindow.ShowAndRun()
+	}
 }
 
 func makeMainMenu() *fyne.MainMenu {
