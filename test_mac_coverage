@@ -1,0 +1,8 @@
+#!/bin/bash
+
+COVER_HTML="app/coverage.html"
+COVER_OUT="app/coverage.out"
+
+CGO_LDFLAGS="-L lib/mac -rpath $(pwd)/lib/mac" go test -v -coverprofile $COVER_OUT ./...
+go tool cover -html=$COVER_OUT -o $COVER_HTML
+open $COVER_HTML
