@@ -195,7 +195,7 @@ func clearCurrentlyPlaying() {
 func updatePlaying(p types.PlayingBook) {
 	updateTitle(p.Title)
 	updateChapterTitle(p.Chapters[p.CurrentChapter].FileName)
-	updatePlayingPosition(p)
+	updatePlayingPosition()
 	d := time.Duration(math.Round(p.FullLengthSeconds * 1000000000))
 	updateBookFullLength(audio.SecondsToTimeText(d))
 	if audio.GetState() == audio.PAUSED || audio.GetState() == audio.STOPPED {
@@ -238,7 +238,7 @@ func updateBookFullLength(bookLength string) {
 	bookFullLength.Refresh()
 }
 
-func updatePlayingPosition(p types.PlayingBook) {
+func updatePlayingPosition() {
 	playingPosition.Text = audio.SecondsToTimeText(audio.GetCurrentBookPlayTime())
 	playingPosition.Refresh()
 }
