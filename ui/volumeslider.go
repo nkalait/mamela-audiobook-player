@@ -40,8 +40,10 @@ func hideVolumeSlider() {
 
 func showVolumeSlider() {
 	volumeSlider.Show()
-	volumeSlider.SetValue(storage.GetVolumeLevel())
-	audio.NotifyVolumeSliderDragged <- storage.GetVolumeLevel()
+	if !Testing {
+		volumeSlider.SetValue(storage.GetVolumeLevel())
+		audio.NotifyVolumeSliderDragged <- storage.GetVolumeLevel()
+	}
 }
 
 const volumeAdjustValue = float64(500)
