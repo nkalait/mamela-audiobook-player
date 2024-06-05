@@ -47,6 +47,17 @@ still working on it...
 
 &nbsp;
 
+# How To Run Test
+
+* ### Mac
+in terminal run: ```./test_mac```
+
+* ### Linux
+still working on it...
+
+* ### Windows
+still working on it...
+
 ***
 # IMPORTANT
 ## Licensing
