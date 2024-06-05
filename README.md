@@ -47,10 +47,11 @@ still working on it...
 
 &nbsp;
 
-# How To Run Test
+# Tests
 
 * ### Mac
-in terminal run: ```./test_mac```
+to run tests in terminal run: ```./test_mac```
+to run test coverage in terminal run: ```./test_mac_coverage```
 
 * ### Linux
 still working on it...
