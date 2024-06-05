@@ -80,7 +80,6 @@ func initBookList() *fyne.Container {
 				loadingBooksTicker.Stop()
 				updateBookListHeader()
 				refreshButton.Show()
-				// refreshButton.Refresh()
 			}
 		}
 	}()
